@@ -47,7 +47,7 @@ function ValidCalza($calza){
 	$valid = false;
 	if (empty($calza)){
 		$valid = true;
-	} elseif (intval($calza) >= 20 && intval($calza) <= 45){
+	} elseif (intval($calza) >= 20 && intval($calza) <= 50){
 		$valid = true;
 	}
 	return $valid;
