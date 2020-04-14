@@ -6,7 +6,7 @@
 - Por cuestiones de estilo básicas, se agregan en los html etiquetas como `<br>`. Sin embargo, entendemos que dichas etiquetas no deberían utilizarse y que el estilo que deberíamos darle a la página web depende del CSS, que veremos más adelante.
 
 
-##Respuestas teóricas y consideraciones de los ejercicios##
+##Respuestas teóricas y consideraciones de los ejercicios
 
 **Ejercicio 1**
 
