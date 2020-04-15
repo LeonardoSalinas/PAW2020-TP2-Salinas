@@ -1,7 +1,7 @@
 # PAW2020-TP2-Salinas
  Entrega del trabajo práctico 2 para Programación Web de Luján.
 
-##Notas:
+##Notas:##
 
 - Por cuestiones de estilo básicas, se agregan en los html etiquetas como `<br>`. Sin embargo, entendemos que dichas etiquetas no deberían utilizarse y que el estilo que deberíamos darle a la página web depende del CSS, que veremos más adelante.
 
