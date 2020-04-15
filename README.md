@@ -18,7 +18,7 @@ En nuestro caso, las validaciones del lado del servidor serán básicas, verific
 
 
 
-**3. ¿Realice las modificaciones necesarias para que el script del punto anterior reciba los datos mediante el método GET. ¿Qué diferencia nota? ¿Cuándo es conveniente usar cada método? 
+**3. Realice las modificaciones necesarias para que el script del punto anterior reciba los datos mediante el método GET. ¿Qué diferencia nota? ¿Cuándo es conveniente usar cada método? 
 Consejo: Utilice las herramientas de desarrollador de su navegador (pestaña red) para observar las diferencias entre las diferentes peticiones.**
 
 La diferencia apreciable entre el envío de datos mediante el método GET respecto al método POST es que, en el método GET, los datos ingresados viajan en la URL; mientras que en el método POST los datos viajan en el body de la petición http. Todo esto, sumado a que la longitud de una URL no es ilimitada, hacen que sea conveniente utilizar el método POST cuando los datos a ser enviados son sensibles o de mucha longitud. Caso contrario, puede utilizarse el método GET.
@@ -33,29 +33,29 @@ La diferencia apreciable entre el envío de datos mediante el método GET respec
 
 - Actualmente no se redimensionan las imágenes al mostrar los datos que el usuario acaba de ingresar. Consideramos que eso es parte del estilo de la página. 
 
-- En respuesta a la pregunta de qué sucedería si dos usuarios cargan imágenes con el mismo nombre, lo que ocurre es que la última en cargarse reemplaza a la primera. Incluso si ya habían imágenes cargadas con anterioridad y se carga una nueva con el mismo nombre, la que se encontraba almacenada es reemplazada igualmente. Con lo cual se estarían perdiendo datos importantes. Para solucionar este problema, lo que hicimos fue aplicar un algoritmo de hash al nombre de la imagen pero conservando su extensión. La función hash recibe como entrada un string compuesto por el nombre temporal de la imagen, concatenado con el momento en que fue subida. De esta forma:
+- En respuesta a la pregunta de qué sucedería si dos usuarios cargan imágenes con el mismo nombre, lo que ocurre es que la última en cargarse reemplaza a la primera. Incluso si ya habían imágenes cargadas con anterioridad y se carga una nueva con el mismo nombre, la que se encontraba almacenada es reemplazada igualmente. Con lo cual se estarían perdiendo datos importantes. Para solucionar este problema, lo que hicimos fue aplicar un algoritmo de hash al nombre de la imagen pero conservando su extensión. La función hash recibe como entrada un string compuesto por el nombre temporal de la imagen, concatenado con el momento en que fue subida y un número generado aleatoriamente entre 1 y 1.000.000. De esta forma:
 
 `$hashedName = hash("sha256" , $imgSubida['tmp_name'] . $theTime . rand(1,1000000)) . $imgExt;`
 
 La línea anterior es parte de una función que se encarga de crear una serie de variables con datos inherentes a la imagen, generar el hash ya mencionado, crear el nuevo nombre de la imagen en base a dicho hash y crear el archivo de imagen en el directorio correspondiente. Finalmente, devuelve un string que contiene el path relativo de la imagen almacenada, para poder mostrarla en el documento HTML. Si bien el código de dicha función está comentado, aquí hay una lista detallada de lo que cada variable representa:
 
-`$imgFolderPath` Contiene el path absoluto de la carpeta que contiene las imágenes. 
-Por ejemplo: `C:\Archivos de Programa\miServer\images`
+`$imgFolderPath` Contiene el path absoluto de la carpeta que contiene las imágenes. Por ejemplo: 
+`C:\Archivos de Programa\miServer\images`
 
-`$imgName`		Contiene el nombre de la imagen que el usuario acaba de subir y su extensión. Puede resultar deseable que el nombre original de la imagen no se pierda. Desde esta variable puede obtenerse ese nombre.
-Por ejemplo: `miFoto.png`
+`$imgName`		Contiene el nombre de la imagen que el usuario acaba de subir y su extensión. Puede resultar deseable que el nombre original de la imagen no se pierda. Desde esta variable puede obtenerse ese nombre. Por ejemplo: 
+`miFoto.png`
 
-`$imgExt`		Contiene sólo la extensión de la imagen antepuesto por un punto. 
-Por ejemplo: `.png`
+`$imgExt`		Contiene sólo la extensión de la imagen antepuesto por un punto. Por ejemplo: 
+`.png`
 
-`$hashedName`	Contiene el nombre hasheado de la imagen y su extensión. El algoritmo de hash recibe como clave un string al cual se le concatenan el nombre temporal de la imagen dentro de `$_FILES`, el momento en que fue subida y un número aleatorio entre 1 y 1.000.000, practicamente garantizando que no se puedan generar dos valores hash iguales incluso si dos usuarios suben una imagen con el mismo nombre y al mismo tiempo.
-Por ejemplo: `820bf42e937aa06025b9c3a1e486889b18e2f4a53d17da434000bca6c19bcc82.png`
+`$hashedName`	Contiene el nombre hasheado de la imagen y su extensión. El algoritmo de hash recibe como clave un string al cual se le concatenan el nombre temporal de la imagen dentro de `$_FILES`, el momento en que fue subida y un número aleatorio entre 1 y 1.000.000, practicamente garantizando que no se puedan generar dos valores hash iguales incluso si dos usuarios suben una imagen con el mismo nombre y al mismo tiempo. Por ejemplo: 
+`820bf42e937aa06025b9c3a1e486889b18e2f4a53d17da434000bca6c19bcc82.png`
 
-`imgFileName`	Contiene el path completo de la imagen ya hasheada junto con su extensión.
-Por ejemplo: `C: \Archivos de Programa\miServer\images\820bf42e937aa06025b9c3a1e486889b18e2f4a53d17da434000bca6c19bcc82.png`
+`imgFileName`	Contiene el path completo de la imagen ya hasheada junto con su extensión. Por ejemplo: 
+`C: \Archivos de Programa\miServer\images\820bf42e937aa06025b9c3a1e486889b18e2f4a53d17da434000bca6c19bcc82.png`
 
-`$imgRelName`	Contiene el path relativo de la imagen.
-Por ejemplo: `images\820bf42e937aa06025b9c3a1e486889b18e2f4a53d17da434000bca6c19bcc82.png`
+`$imgRelName`	Contiene el path relativo de la imagen. Por ejemplo: 
+`images\820bf42e937aa06025b9c3a1e486889b18e2f4a53d17da434000bca6c19bcc82.png`
 
 El uso de tantas variables podría haberse evitado, pero se decidió hacerlo de esta forma para, de ser necesario, poder recuperar fácilmente en el futuro estos datos.
 
