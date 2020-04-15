@@ -1,5 +1,5 @@
 # PAW2020-TP2-Salinas
- Entrega del trabajo práctico 1 para Programación Web de Luján.
+ Entrega del trabajo práctico 2 para Programación Web de Luján.
 
 ##Notas:
 
@@ -7,8 +7,6 @@
 
 
 ##Respuestas teóricas y consideraciones de los ejercicios
-
-**Ejercicio 1**
 
 
 
