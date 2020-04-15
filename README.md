@@ -6,7 +6,7 @@
 - Por cuestiones de estilo básicas, se agregan en los html etiquetas como `<br>`. Sin embargo, entendemos que dichas etiquetas no deberían utilizarse y que el estilo que deberíamos darle a la página web depende del CSS, que veremos más adelante.
 
 
-##Respuestas teóricas y consideraciones de los ejercicios##
+##Respuestas teóricas y consideraciones de los ejercicios
 
 **Ejercicio 1**
 
@@ -16,7 +16,7 @@
 
 Se requiere validar los datos del lado del cliente por cuestiones de usabilidad. Es decir, para ayudar al usuario a ingresar los datos correctamente en el formulario a medida que los escribe y alertarle de los errores que cometa antes de enviar el formulario. Sin embargo, desde el punto de vista de la seguridad de nuestro sistema, las validaciones del lado del cliente no garantizan que los datos ingresados no sean maliciosos, ya que todos los controles que se hagan via HTML o Javascript son fáciles de evadir. Es por eso que, independientemente de las validaciones realizadas del lado del cliente, deben validarse del lado del servidor.
 
-En nuestro caso, las validaciones del lado del servidor serán báscias, verificando únicamente que los datos ingresados no estén vacíos (en caso de ser olbigatorios) y que tengan el formato esperado. No obstante, no se harán validaciones más exhaustivas como la utilización de expresiones regulares o PDO ya que (además de que los datos no son persistidos en una base de datos) consideramos que esas técnicas escapan al objetivo de este trabajo práctico.
+En nuestro caso, las validaciones del lado del servidor serán básicas, verificando únicamente que los datos ingresados no estén vacíos (en caso de ser obligatorios) y que tengan el formato esperado. No obstante, no se harán validaciones más exhaustivas como la utilización de expresiones regulares o PDO ya que (además de que los datos no son persistidos en una base de datos) consideramos que esas técnicas escapan al objetivo de este trabajo práctico.
 
 
 
