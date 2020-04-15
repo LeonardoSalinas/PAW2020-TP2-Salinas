@@ -1,6 +1,6 @@
 <?php
 
-
+//Me fijo si el method del form http es POST o GET para capturar las variables
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	require "methodpost.php";
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -9,119 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	echo "<h1>Error en el request method</h1>";
 }
 
+require "validations.php";
 
-//Validar nombre
-function ValidNombre($nombre){
-	return isset($nombre);
-}
-
-
-//Validar email
-function ValidEmail($email){
-	$valid = false;
-	if (isset($email) && filter_var($email, FILTER_VALIDATE_EMAIL)){
-		$valid = true;
-	}
-	return $valid;
-}
-
-
-//Validar tel
-function ValidTel($tel){
-	return isset($tel);
-}
-
-
-//Validar edad
-function ValidEdad($edad){
-	$valid = false;
-	if (intval($edad) >= 0 && intval($edad) <= 110){
-		$valid = true;
-	}
-	return $valid;
-}
-
-
-//Validar calza (talla clazado)
-function ValidCalza($calza){
-	$valid = false;
-	if (empty($calza)){
-		$valid = true;
-	} elseif (intval($calza) >= 20 && intval($calza) <= 50){
-		$valid = true;
-	}
-	return $valid;
-}
-
-
-//Validar altura
-function ValidAltura($altura){
-	$valid = false;
-	if (empty($altura)){
-		$valid = true;
-	} elseif (intval($altura) >= 0 && intval($altura) <= 350){
-		$valid = true; 
-	}
-  	return $valid;
-}
-
-
-//Validar nacim (fecha nacimiento)
-function ValidNacim($nacim){
-	if (isset($nacim) && $nacim < date("Y-m-d")){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
-//Validar cpelo (color pelo)
-function ValidCPelo($cpelo){
-	$cpeloLista = array ("negro", "rubio", "pelirrojo", "blanco", "marron");
-	if (in_array($cpelo, $cpeloLista)){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
-//Validar fechaturno
-function ValidFechaturno($fechaturno){
-	if (isset($fechaturno) && $fechaturno >= date("Y-m-d")){
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
-//Validar horaturno
-function ValidHoraturno($horaturno){
-	$valid = false;
-	if (isset($horaturno)){
-		$arrayDate = explode(":", $horaturno);
-	  	$minutes = $arrayDate[1]; 
-	  	if (intval($minutes) == 00 || intval($minutes) == 15 || intval($minutes) == 30 || intval($minutes) == 45) {
-	  		$valid = true;
-  		} 
- 	}
- 	return $valid;
-}
-
-
-function ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno) {
-	if (ValidNombre($nombre) && ValidEmail($email) && ValidTel($tel) && ValidEdad($edad) && ValidCalza($calza) && ValidAltura($altura) && ValidNacim($nacim) && ValidCPelo($cpelo) && ValidFechaturno($fechaturno) && ValidHoraturno($horaturno)) {
-
-		return true;
-	} else {
-		return false;
-	}
-}
-
-
-if (ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno)){
+//Si las validaciones funcionan correctamente
+if (ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno, $imgSubida)){
 	echo "<p>Resumen del Turno: </p>";
 	echo "<p>";
     echo "<br>Nombre: ";
@@ -146,7 +37,16 @@ if (ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fec
     echo $horaturno;
     echo "<br>";
     echo "</p>";
-} else {
+
+    if ($imgSubida["error"] != 4){
+    	$imgRelName = saveImg($imgSubida);
+    	echo "<br>";
+    	echo "<p>";
+    	echo "<img src=\"". $imgRelName ."\" alt=\"Imagen subida por el usuario.\">";
+    	echo "</p>";
+    }
+
+} else { //Sino, al menos una de las validaciones fallo
 	echo "<h2>Los datos ingresados fueron incorrectos.<h2>";
 }
 
