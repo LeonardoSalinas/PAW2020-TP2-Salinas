@@ -12,9 +12,8 @@ $router = new Router;
 $router->define([
     'GET /' => 'FormController@index',
     'GET /turnos_list' => 'TurnosListController@list',
-  //  'POST /save_task' => 'TaskController@save',
   // 'GET /fichaview' => 'TurnosListController@ficha',
-  //  'POST /save_config' => 'ConfigController@save',
+ 
 ]);
 
 $request = new Request;
