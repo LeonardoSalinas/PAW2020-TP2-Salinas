@@ -1,5 +1,6 @@
 <?php
 
+
 //Me fijo si el method del form http es POST o GET para capturar las variables
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	require "methodpost.php";
@@ -9,7 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 	echo "<h1>Error en el request method</h1>";
 }
 
+
 require "validations.php";
+require "Persistencia.php";
+require_once("../model/turnoModel.php");
 
 //Si las validaciones funcionan correctamente
 if (ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno, $imgSubida)){
@@ -37,6 +41,7 @@ if (ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fec
     echo $horaturno;
     echo "<br>";
     echo "</p>";
+ 
 
     if ($imgSubida["error"] != 4){
     	$imgRelName = saveImg($imgSubida);
@@ -45,6 +50,12 @@ if (ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fec
     	echo "<img src=\"". $imgRelName ."\" alt=\"Imagen subida por el usuario.\">";
     	echo "</p>";
     }
+
+    //una vez validado cargo el turno para persistir
+    $t = new Turno($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno, $imgRelName);
+    $per = new Persistencia;
+    $per-> guardar($t);
+    
 
 } else { //Sino, al menos una de las validaciones fallo
 	echo "<h2>Los datos ingresados fueron incorrectos.<h2>";

@@ -7,6 +7,12 @@
 </head>
 
 <body>
+<header>
+
+	<?php require "navview.php" ?>
+
+</header>
+
     <h1>Formulario:</h1>
     <form enctype="multipart/form-data" action="core/form.php" method="post">
 	    <br> *Nombre: <input type="text" name="nombre" required>
@@ -39,6 +45,7 @@
     </form>
 
     <p>Los campos marcados con * son obligatorios.</p>
+	
 </body>
 
 </html>
