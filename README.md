@@ -70,3 +70,38 @@ La diferencia apreciable desde la herramienta de desarrollador es que en el mét
 `Content-Length` Indica el tamaño en bytes del contenido enviado.
 
 `Content-Type` Indica el tipo de contenido de la petición.
+
+
+
+**6. Agregar persistencia al sistema de turnos. Todos los datos del formulario deben almacenarse
+mediante algún mecanismo para poder ser recuperados posteriormente. Crear una nueva vista que
+le permita a un empleado administrativo visualizar todos los turnos en una tabla. La tabla debe
+incluir los siguientes campos:
+a. Fecha del turno
+b. Hora del turno
+c. Nombre del paciente
+d. Teléfono
+e. Email
+f. Link a la ficha del turno (la ficha se implementa en el siguiente punto)
+Esta página y la del formulario del punto 2 deben contar con una barra de navegación que permita
+ir a una u otra pantalla.
+Además, al procesar el formulario en el lado servidor, el sistema asigne un número de turno (que
+no debe repetirse).
+Para generar el sistema de persistencia, se aconseja estudiar algún mecanismo de serialización de
+datos.
+¿Cómo relaciona la imagen del turno con los datos del turno? Comente alternativas que evaluó y
+opción elegida.**
+
+La relación entre imagen y turno es guardad en la clase turno con una variable String a su path relativo en el proyecto para poder ser ubicada luego en el momento requerido.
+
+
+
+**7. Construya la vista de ficha de turno. Dicha vista debe permitir acceder al turno y mostrar todos sus
+datos, recuperados del mecanismo de persistencia elaborado en el punto anterior. ¿Cómo se
+identifica y discrimina un turno de otro? Debe funcionar el link a la ficha que se encuentra en la
+tabla de turnos. Recuerde agregar un enlace para volver a la tabla de turnos.**
+
+La identificación de un turno con otro se hace a través de la variable ID en la clase turno la cual es creada con el atributo hora y fecha de la misma clase, ya que un turno no puede otorgarse el mismo día en el mismo instante de tiempo, generando de esta manera ID unívocos.
+
+**NOTA: 
+Los puntos 6 y7 fueron creados en un brach para la proxíma modificación debido a algunos inconvenientes con la refactorización del proyecto, los cuales serán tratados lo antes posible.**
