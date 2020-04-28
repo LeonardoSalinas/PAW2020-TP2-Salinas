@@ -1,13 +1,20 @@
 <?php
+namespace App\core;
 
+class Validations{
+
+
+public function __construct(){
+
+}
 //Validar nombre
-function ValidNombre($nombre){
+public function ValidNombre($nombre){
 	return isset($nombre);
 }
 
 
 //Validar email
-function ValidEmail($email){
+public function ValidEmail($email){
 	$valid = false;
 	if (isset($email) && filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$valid = true;
@@ -17,13 +24,13 @@ function ValidEmail($email){
 
 
 //Validar tel
-function ValidTel($tel){
+public function ValidTel($tel){
 	return isset($tel);
 }
 
 
 //Validar edad
-function ValidEdad($edad){
+public function ValidEdad($edad){
 	$valid = false;
 	if (intval($edad) >= 0 && intval($edad) <= 110){
 		$valid = true;
@@ -33,7 +40,7 @@ function ValidEdad($edad){
 
 
 //Validar calza (talla clazado)
-function ValidCalza($calza){
+public function ValidCalza($calza){
 	$valid = false;
 	if (empty($calza)){
 		$valid = true;
@@ -45,7 +52,7 @@ function ValidCalza($calza){
 
 
 //Validar altura
-function ValidAltura($altura){
+public function ValidAltura($altura){
 	$valid = false;
 	if (empty($altura)){
 		$valid = true;
@@ -57,7 +64,7 @@ function ValidAltura($altura){
 
 
 //Validar nacim (fecha nacimiento)
-function ValidNacim($nacim){
+public function ValidNacim($nacim){
 	if (isset($nacim) && $nacim < date("Y-m-d")){
 		return true;
 	} else {
@@ -67,7 +74,7 @@ function ValidNacim($nacim){
 
 
 //Validar cpelo (color pelo)
-function ValidCPelo($cpelo){
+public function ValidCPelo($cpelo){
 	$cpeloLista = array ("negro", "rubio", "pelirrojo", "blanco", "marron");
 	if (in_array($cpelo, $cpeloLista)){
 		return true;
@@ -78,7 +85,7 @@ function ValidCPelo($cpelo){
 
 
 //Validar fechaturno
-function ValidFechaturno($fechaturno){
+public function ValidFechaturno($fechaturno){
 	if (isset($fechaturno) && $fechaturno >= date("Y-m-d")){
 		return true;
 	} else {
@@ -88,7 +95,7 @@ function ValidFechaturno($fechaturno){
 
 
 //Validar horaturno
-function ValidHoraturno($horaturno){
+public function ValidHoraturno($horaturno){
 	$valid = false;
 	if (isset($horaturno)){
 		$arrayDate = explode(":", $horaturno);
@@ -101,7 +108,7 @@ function ValidHoraturno($horaturno){
 }
 
 //Validar imgSubida
-function ValidImg($imgSubida){
+public function ValidImg($imgSubida){
 	$valid = false;
 	if ($imgSubida["error"] == 4){ 	//No es obligatorio subir una img. En caso de error #4...
 		$valid = true;				//... es que no se ha subido una img; se debe continuar.
@@ -116,8 +123,8 @@ function ValidImg($imgSubida){
 }
 
 //Valido todos los parametros al mismo tiempo en una sola funcion
-function ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno, $imgSubida) {
-	if (ValidNombre($nombre) && ValidEmail($email) && ValidTel($tel) && ValidEdad($edad) && ValidCalza($calza) && ValidAltura($altura) && ValidNacim($nacim) && ValidCPelo($cpelo) && ValidFechaturno($fechaturno) && ValidHoraturno($horaturno) && ValidImg($imgSubida)) {
+public function ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno, $imgSubida) {
+	if ($this->ValidNombre($nombre) && $this->ValidEmail($email) && $this->ValidTel($tel) && $this->ValidEdad($edad) && $this->ValidCalza($calza) && $this->ValidAltura($altura) && $this->ValidNacim($nacim) && $this->ValidCPelo($cpelo) && $this->ValidFechaturno($fechaturno) && $this->ValidHoraturno($horaturno) && $this->ValidImg($imgSubida)) {
 
 		return true;
 	} else {
@@ -127,7 +134,7 @@ function ValidAll($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo,
 
 //Almacena una img valida y devuelve el path relativo de la misma
 //En el archivo README.md hay una explicacion con mayor detalle de lo que contiene cada variable
-function saveImg($imgSubida){
+public function saveImg($imgSubida){
 	 $imgFolderPath = getcwd(). '\\' . "images" . '\\'; //Path de la carpeta donde se guardan las imgs
 	 $imgName = basename($imgSubida['name']); 			//nombreImg.extension
 	 $imgExt = substr($imgName,strrpos($imgName,'.')+0);//Extension de la img con el punto
@@ -142,7 +149,7 @@ function saveImg($imgSubida){
 
 	 return ($imgRelName);
 
+	}
+
 }
-
-
 ?>

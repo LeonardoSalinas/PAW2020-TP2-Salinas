@@ -11,14 +11,12 @@ class Router
         $this->routes = $routes;
     }
 
-    function direct($request)
+    function direct($path, $method)
     {
-        $operation = $this->routes["{$request->method} {$request->path}"];
+        $operation = $this->routes["$method $path"];
         list($class, $method) = explode('@', $operation);
         $fullClass = "App\controllers\\$class";
         $controller = new $fullClass;
         $controller->$method();
     }
 }
-
-?>

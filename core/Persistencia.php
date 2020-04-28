@@ -1,72 +1,85 @@
 <?php
-require "../model/turnoModel.php";
-require "../model/listTurnos.php";
+namespace App\core;
+use App\model\Turno;
 
+use App\model\ListTurnos;
+//require "../model/turnoModel.php";
+//require "../model/listTurnos.php";
 
 class Persistencia{
     public function __construct(){
         
     }
+    
     public function guardar($turno){   
     //OBTENGO LA LISTA DE TURNOS ALMACENADA EN EL ARCHIVO
-    $archivo = file_get_contents('../persistencia.json');
-    $l = new listTurnos();
-        if(empty($archivo)){
-            $archivo= fopen("../persistencia.json", "w+");
-          
-            chmod("../persistencia.json", 755);
-           
-            $l -> addTurnos($turno);
-            $json_string = json_encode($l);
-
-            fwrite($archivo,"");
-            fclose($archivo);
-            file_put_contents('../persistencia.json', $json_string); 
+   
+    $l = new ListTurnos;
+    
+    if (!file_exists('persistencia')) { 
             
+            $l->addTurnos($turno);
+        
+            $s = serialize($l);
+            // almacenar $s en algún lado 
+            $fp = fopen("persistencia", "a+");
+            fwrite($fp, $s);
+            
+            fclose($fp);
 
         }else{
-            //agrego el turno nuevo
-            $l->addTurnos($turno);
-            $a = json_decode($archivo, true);
-            //recupero los turnos viejos
+            //agrego el turno nuevo recuperando los anteriores en el archivo
+           
+            $s = implode("", @file("persistencia"));
+            $a = unserialize($s);
             foreach ($a as $t) {
-                foreach ($t as $ar) {
-                    # code...
-                    $l->addTurnos($ar);
+                foreach($t as $arr){
+                    
+                    $l->addTurnos($arr);
+                   
                 }
-                # code...
             }
-            $archivo= fopen("../persistencia.json", "w+");
-            // $t = array($nombre, $email, $tel, $edad, $calza, $altura, $nacim, $cpelo, $fechaturno, $horaturno, $imgSubida);
-             chmod("../persistencia.json", 755);
-            $json_string = json_encode($l);
+            $l->addTurnos($turno);
+            $sl = serialize($l);
+            $fp = fopen("persistencia", "w");
+            fwrite($fp,$sl);
 
-            fwrite($archivo,"");
-            fclose($archivo);
-            file_put_contents('../persistencia.json', $json_string); 
+            fclose($fp);
+
+
+         
         }
 
-    }       
-       public function leer(){
-
-        $archivo = file_get_contents('../persistencia.json');
-        $lista = new listTurnos();
-        $a = json_decode($archivo, true);
-        //recupero los turnos viejos
+        
+    }    
+       
+    public function leer(){
+        $l = new ListTurnos;
+        $s = implode("", @file("persistencia"));
+        $a = unserialize($s);
         foreach ($a as $t) {
             foreach($t as $arr){
 
-                $lista->addTurnos($arr);
+                $l->addTurnos($arr);
             }
-            
-            # code...
         }
-        return $lista;
+        // ahora utilizar la función show_one() del objeto $a.  
+        return $l;
 
-       }
+       
+    }
 
 
-
+    public function buscar($id){
+        $li =$this->leer();
+        foreach ($li as $t) {
+            foreach($t as $arr){
+                if($arr->id == $id){
+                    return $arr;
+            }
+            }
+        }
+    }
 
 
    
